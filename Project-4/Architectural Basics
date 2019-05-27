@@ -5,9 +5,11 @@
 
 2.MaxPooling:
   MaxPooling is done to capture Maximum values from the input image or in other words
-  capturing the loudest features in the input image
-  Maxpooling is used to reduce the dimension of channels and to capture the loudest features in the input image. 
-  With a stride of 2 maxpooling halves the size of input, and it doubles the receptive field of output. 
+  capturing the loudest features in the input image.
+  Maxpooling is used to reduce the dimension of channels 
+  and to capture the loudest features in the input image. 
+  With a stride of 2 maxpooling halves the size of input,
+  and it doubles the receptive field of output. 
   It helps in reducing the number of layers to achieve the required receptive field.
 
 3.1x1 Convolutions:
@@ -28,7 +30,8 @@
   image present in one pixel of the output image or channel.
  
  6.SoftMax:
-  Softmax is an activaton function mostly used in the Prediction layer ,as it gives most covincing output.
+  Softmax is an activaton function mostly used in the Prediction layer ,
+  as it gives most covincing output.
   Softmax is not actually probability ,it is more over probability like. 
   
   softmax = e^a/(e^a + e^b + e^c)  , where a,b,c are the classes.
@@ -41,7 +44,8 @@
   and using high learning rate might cause over shooting of errors. 
   
 8.Kernels and how do we decide the number of kernels:
-  Kernels are the filters used to perform convolution operation on input. 3x3 is the most widely used kernel size.
+  Kernels are the filters used to perform convolution operation on input. 
+  3x3 is the most widely used kernel size.
   Our model accuracy increaces with increase in the kernels.
   large number of kernels gives large amount of extracted features.
   But the number of kernels is decided based on our required accuracy cutoff and the hardware to use.
@@ -66,7 +70,8 @@
 12.Concept of Transition Layers:
   Transition layer is a combination maxpooling and 1x1 convolution. 
   This block is used to reduce the size and number of channels. 
-  The transition layers helps to keep in check the number of parameters and combine relevant features to form feature maps.
+  The transition layers helps to keep in check the number of parameters
+  and combine relevant features to form feature maps.
 
 13.Position of Transition Layer:
   Transaction block/layers are placed in between of the convolution blocks.
@@ -90,13 +95,14 @@
 
 17.The distance of MaxPooling from Prediction:
   The distance of Maxpooling from Prediction should be minimum of two or three layers.
-  Usage of Maxpooling near Prediction layer will give poor model performance as most of the information are ignored.
+  Usage of Maxpooling near Prediction layer will give poor model performance as most 
+  of the information are ignored.
   The prediction should be done on as many features as possible.
 
 18.The distance of Batch Normalization from Prediction:
   Batch Normalization shoukd not be used before the Prediction layer.
 
-19.When do we stop convolutions and go ahead with a larger kernel or some other alternative (which we have not yet covered):
+19.When do we stop convolutions and go ahead with a larger kernel or some other alternative :
   This is done in the last layer so as to get one pixel value for each channel.
   Which are then fed to softmax of prediction.
  
@@ -107,7 +113,8 @@
 21.Batch Size, and effects of batch size:
   Batch size is the number of images that is passed at a time or single batch  through the network. 
   As the batch size increases the time/epoch decreases.
-  Generally a larger batch size is good but the performance drops as the batch size increases beyond the opimum size.
+  Generally a larger batch size is good but the performance drops
+  as the batch size increases beyond the opimum size.
 
 22.When to add validation checks:
   Validation checks should be added early in modelling to know the validation accuracy in each epoch 
@@ -119,9 +126,10 @@
   When model reaches near global minima the learning should be reduced to attain the global minima.
   This can be done with the help of LR scheduler.
 
-24.Adam vs SGD
+24.Adam vs SGD:
   Both are optimizers used to update the weights of network. 
   SGD is a variant of Gradient Descent. In SGD the back propagation takes place for every batch.
   Adam is an algorithm for gradient-based optimization of stochastic objective functions.
-  It combines the advantages of two SGD extensions — Root Mean Square Propagation (RMSProp) and Adaptive Gradient Algorithm (AdaGrad) 
+  It combines the advantages of two SGD extensions
+  — Root Mean Square Propagation (RMSProp) and Adaptive Gradient Algorithm (AdaGrad) 
   — and computes individual adaptive learning rates for different parameters.
