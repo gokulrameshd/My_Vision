@@ -1,71 +1,127 @@
-1.3x3 Convolutions
-3x3 is the most widely accepted and used convolution in industry and academia. Based on experiments it is found to be most efficient and GPUs are accelerated for 3x3 convolutions. It involves matrix two 3x3 multiplication which produced the output value. It extracts general features from the given input.
+1.How many layers:
+  Layers depends on our requirement.
+  Usually the layers are add so that our prediction layers receptive field should 
+  be higher than image size.
 
-2.Receptive Field
-Receptive field of an output or channel is the area(dimension) on input which gets convolved with kernel. The receptive field increases from one layer to next as more part of the image gets convolved.
+2.MaxPooling:
+  MaxPooling is done to capture Maximum values from the input image or in other words
+  capturing the loudest features in the input image
+  Maxpooling is used to reduce the dimension of channels and to capture the loudest features in the input image. 
+  With a stride of 2 maxpooling halves the size of input, and it doubles the receptive field of output. 
+  It helps in reducing the number of layers to achieve the required receptive field.
 
-3.How many layers
-The number of layers depends on the size of the image or object that has to be classified. The receptive field should match or be more than the size of the object.
+3.1x1 Convolutions:
+  In 1x1 Convolutions our kernel size is 1x1 .
+  It does not extract features ,rather than it combines the useful features.
+  This involves no convolution operation but instead combining of channels. 
+  1x1 will merge relevant channels to form specific feature maps. 
+  It combines the pre existing features that are found together.
+  
+4.3x3 Convolutions:
+  3x3 is the most simplest convolutions for feature extraction.
+  It is computationally less expensive than other higher convolution(5x5,7x7..)
+  3x3 is widely used industry now-a-days .
 
-4.Kernels and how do we decide the number of kernels
-Kernels are nxn arrays used to perform convolution operation on input. 3x3 is the most widely used kernel size. The number of kernels increases with the complexity of image or feature in image. More kernels are also needed if there is high Intra and Inter class variation.
 
-5.1x1 Convolutions
-This involves no convolution operation but instead combining of channels. 1x1 will merge relevant channels to form specific feature maps. It combines the pre existing features that are found together.
+5.Receptive Field:
+  Receptive Field can be defined as how much information(pixels) of input 
+  image present in one pixel of the output image or channel.
+ 
+ 6.SoftMax:
+  Softmax is an activaton function mostly used in the Prediction layer ,as it gives most covincing output.
+  Softmax is not actually probability ,it is more over probability like. 
+  
+  softmax = e^a/(e^a + e^b + e^c)  , where a,b,c are the classes.
+  
+7.Learning Rate:
+  Learning rate is the extra parameter used in the backprogation .
+  Learning rate is atlered based rate we want our model to learn.
+  Using a optimum learning rate is very important .
+  Because using low learning rate will make our training forever 
+  and using high learning rate might cause over shooting of errors. 
+  
+8.Kernels and how do we decide the number of kernels:
+  Kernels are the filters used to perform convolution operation on input. 3x3 is the most widely used kernel size.
+  Our model accuracy increaces with increase in the kernels.
+  large number of kernels gives large amount of extracted features.
+  But the number of kernels is decided based on our required accuracy cutoff and the hardware to use.
 
-6.MaxPooling
-Maxpooling is used to reduce the dimension of channels and to capture the loudest features in the input image. With a stride of 2 maxpooling halves the size of input, and it doubles the receptive field of output. It helps in reducing the number of layers to achieve the required receptive field.
+9.Batch Normalization:
+  Batch normalization is similar to image normalization .
+  Here the normalization is done on the images channel wise with the model.
+  As the name indicates the normalization is done in batches.
+  It makes the kernels equally/efficiently for all the classes. 
 
-7.Position of MaxPooling
-Maxpooling should be placed only after the model learns specific features from image. For example in the case of medium sized images the edges and gradients will be learnt after receptive field of 11x11, and hence maxplooling can be introduced next. This is followed for the rest of architecture.
+10.Image Normalization : 
+  Image Normalazation is done to get all the values into similar scales.
+  Ex : 0 to 1 , -3 to 3 
+  In the MinMax normalization the normalized values ranges from 0 to 1
+  In the Standard normalization the mean becomes 0 and standard deviation is 1.
+  Normalization helps in faster convergence as the values are similar sclaes.
+  Image normalization is done on images before it is given into model.
 
-8.The distance of MaxPooling from Prediction,
-Since the maxpooling operation results in some loss of information it should be atleast 2 or 3 layers away from the prediction layer. The prediction should be done on as rich features as possible.
+11.Position of MaxPooling:
+  Maxpooling should be placed only after the extraction of edges and gradients are done.
 
-9.SoftMax
-SoftMax takes the output from the last layer of the model and gives the probability distribution of classes. It should be noted that it doesn't give the actual probability of classes, but boost them in favour of highest valued classes.
+12.Concept of Transition Layers:
+  Transition layer is a combination maxpooling and 1x1 convolution. 
+  This block is used to reduce the size and number of channels. 
+  The transition layers helps to keep in check the number of parameters and combine relevant features to form feature maps.
 
-10.Concept of Transition Layers
-Transition layer consists of maxpooling and 1x1 convolution. This block is used to reduce the size and number of channels. The transition layers helps to keep in check the number of parameters and combine relevant features to form feature maps.
+13.Position of Transition Layer:
+  Transaction block/layers are placed in between of the convolution blocks.
+  It is placed after edges, texture, parts of objects are extracted from convolution.
+  
+14.Number of Epochs and when to increase them:
+  Number of Epochs is the number of times the complete training data passed through the model.
+  The  number of epochs are increased to train the model more or to increase the traing accuracy. 
+  
+15.Dropout:
+  Dropouts are used for regularization.
+  When the dropouts are given certain amount/ Percentage of data is dropped .
+  Dropouts is of two types that is Kernel dropout and Pixel dropout.
+  As the dropout drops out certain features , 
+  the kernels are forced to extract other (more) features to attain the accuracy. 
+  
+ 
+16.When do we introduce DropOut, or when do we know we have some overfitting:
+  Dropout is added when training and validation accuracy are not close to each other. 
+  This means the model has overfit the training data and is failing to generalize for testing data.
 
-11.Position of Transition Layer
-Trasition layers are positioned only after relevant features are extracted by convolution layers. It is placed after edges, texture, parts of objects are extracted from convolution.
+17.The distance of MaxPooling from Prediction:
+  The distance of Maxpooling from Prediction should be minimum of two or three layers.
+  Usage of Maxpooling near Prediction layer will give poor model performance as most of the information are ignored.
+  The prediction should be done on as many features as possible.
 
-12.Image Normalization
-The input image is normalized so that the pixel values can take specific interval values. This helps in bringing out the features as clearly as possible for the kernels to extract them.
+18.The distance of Batch Normalization from Prediction:
+  Batch Normalization shoukd not be used before the Prediction layer.
 
-13.Batch Normalization
-Similar to image normalization the channels are normalized from -1 to +1 so the features are easy to learn for the kernels in next layer. This helps in increase the training accuracy.
+19.When do we stop convolutions and go ahead with a larger kernel or some other alternative (which we have not yet covered):
+  This is done in the last layer so as to get one pixel value for each channel.
+  Which are then fed to softmax of prediction.
+ 
+20.How do we know our network is not going well, comparatively, very early:
+  When the training the model if the training accuracy of the first two epochs 
+  are lower than expected we can know the network is not going well.
 
-14.The distance of Batch Normalization from Prediction,
-Batch normalization should never be added to last second layer as the softmax requires raw output values for prediction.
+21.Batch Size, and effects of batch size:
+  Batch size is the number of images that is passed at a time or single batch  through the network. 
+  As the batch size increases the time/epoch decreases.
+  Generally a larger batch size is good but the performance drops as the batch size increases beyond the opimum size.
 
-15.Number of Epochs and when to increase them
-The model is run with less number of epochs to begin with(in vanilla network) and gradually that number is increased as model is tuned for higher accuracy and performance.
+22.When to add validation checks:
+  Validation checks should be added early in modelling to know the validation accuracy in each epoch 
+  and to save the best model.
 
-16.Dropout
-Droput switches off the fraction of pixels in a layer so that kernels are forced to learn other features. It is added after each convolution layer
-
-17.When do we introduce DropOut, or when do we know we have some overfitting
-Dropout is added when training and validation accuracy are not close to each other. This means the model has overfit the training data and is failing to generalize for testing data.
-
-18.When do we stop convolutions and go ahead with a larger kernel or some other alternative (which we have not yet covered)
-This is done in the last layer so as to get one pixel value for each channel. Which are then fed to softmax of prediction.
-
-19.How do we know our network is not going well, comparatively, very early
-When the training accuracy of the first epoch is lower than expected we can know the network is not going well.
-
-20.Batch Size, and effects of batch size
-Batch size is the number of images that can be passed at a time through the network. As the batch size increases the time/epoch decreases. Generally a large batch size optimum for the model is chosen.
-
-21.When to add validation checks
-Validation checks should be added early in modelling to know the validation accuracy in each epoch and to save the best model.
-
-22.Learning Rate
-Learning rate is the steps in the gradient descent to reach the minimum loss value. It is multiplied to the gradient and if the steps are big it might overshoot the minimum values and hence optimum learning rate is used to reach the minima
-
-23.LR schedule and concept behind it
-LR schedule gradually decrease Learning rate per each epoch. In the first few epochs the learning rate can be large so as to take bigger steps but it is reduced gradually so as to take smaller steps with more epochs to reach the minima.
+23.LR schedule and concept behind it:
+  LR scheduler is used to schedule the learning rate.
+  During the model training process the model tries to attain the global minima .
+  When model reaches near global minima the learning should be reduced to attain the global minima.
+  This can be done with the help of LR scheduler.
 
 24.Adam vs SGD
-Both are optimizers used to update the weights of network. The optimizer is chosen based on model requirement. Adam is extension of SGD.
+  Both are optimizers used to update the weights of network. 
+  SGD is a variant of Gradient Descent. In SGD the back propagation takes place for every batch.
+  Adam is an algorithm for gradient-based optimization of stochastic objective functions.
+  It combines the advantages of two SGD extensions — Root Mean Square Propagation (RMSProp) and Adaptive Gradient Algorithm (AdaGrad) 
+  — and computes individual adaptive learning rates for different parameters.
