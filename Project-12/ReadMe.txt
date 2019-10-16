@@ -22,7 +22,7 @@ Post-2 :Mini-Batches
 -training time reduced to 256s
 
 Post-3 :Regularisation
--CutOut : zeroing out a random subset,8×8 square subsets of the training images
+-CutOut : zeroing out a random subset,8Ã—8 square subsets of the training images
 -batch size:768 ,momentum = 0.9,weight decay = 5e-4
 -mix up regularisation
 -Training time reduced to 154s
@@ -33,7 +33,7 @@ Post-4 :Architecture
 -L1+L2+L3
 
 Post-5 :Hyperparameters
-- w?(1–?a)w
+- w?(1â€“?a)w
 - Weight decay in the presence of batch normalisation acts as a 
   stable control mechanism on the effective step size.
 
@@ -52,6 +52,12 @@ Post-8 :Bag of tricks
 -conv->pool->norm->activation
 -Label smoothing
 -CELU activation function
+-Ghost batch norm :512 
+-Frozen Batch Norm scales 
+-Input patch whitening :Global PCA(ZCA)
+-cut out reduced from 8x8 to 5x5
+-Exponential Moving Averages:update every 5 batches
+-Test-Time Augmentation
 
 #####################################################################
 
@@ -72,9 +78,4 @@ David Yang:
 -SGD ,Nestrov momentum
 -Slanted triangular learning rate scheduler
 
--Ghost batch norm :512 
--Frozen Batch Norm scales 
--Input patch whitening :Global PCA(ZCA)
--cut out reduced from 8x8 to 5x5
--Exponential Moving Averages:update every 5 batches
--Test-Time Augmentation
+
